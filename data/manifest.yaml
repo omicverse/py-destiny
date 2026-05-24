@@ -1,0 +1,43 @@
+package: py-destiny
+upstream:
+  name: destiny
+  version: "3.18.0"
+  source: Bioconductor
+  url: https://github.com/theislab/destiny
+
+algorithm_class: ordinal
+parity_threshold: 0.90
+
+fixture:
+  path: data/fixture_guo.rds
+  source: destiny::guo (Guo et al. 2010 qPCR data, 428 cells × 48 genes)
+  expected_shape: [428, 48]
+
+reference_command: tests/r_reference_driver.R
+seed: 42
+
+outputs:
+  - name: diffusion_map
+    type: "n_cells × n_eigs eigenvector matrix"
+    location_reference: "$.eigenvectors"
+    location_candidate: "eigenvectors"
+    metric: embedding
+    threshold: 0.80   # Procrustes; relaxed due to local-sigma estimation diff
+  - name: eigenvalues
+    type: "n_eigs scalars"
+    location_reference: "$.eigenvalues"
+    location_candidate: "eigenvalues"
+    metric: ordinal
+    threshold: 0.95
+  - name: dpt
+    type: "n_cells pseudotime"
+    location_reference: "$.dpt"
+    location_candidate: "dpt"
+    metric: ordinal
+    threshold: 0.85
+
+acceleration:
+  enabled: false
+
+created_by: claude-opus-4-7 via omicverse-rebuildr
+created_at: 2026-05-24
