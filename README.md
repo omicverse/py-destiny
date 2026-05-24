@@ -11,8 +11,9 @@ A **Python port of [destiny](https://github.com/theislab/destiny)** (Angerer et 
 ## Install
 
 ```bash
-pip install pydestiny
+pip install pydestiny-bio
 ```
+(module name is `pydestiny`; the PyPI distribution name `pydestiny` was taken by an unrelated project, so this package ships as `pydestiny-bio`.)
 
 ## Quick-start
 
